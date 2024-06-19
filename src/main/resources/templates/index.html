@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #f8f9fa; /* Light gray background for the body */
+            background-color: #f8f9fa;
         }
         .container {
             background-color: #e9ecef;
@@ -53,6 +53,9 @@
 </head>
 <body>
 <div class="container">
+    <div class="header-info">
+        Lê Anh Kiệt - 2180606202
+    </div>
     <h2 class="text-center mt-4">Thông tin nhân viên</h2>
     <a href="/nhanvien/add" class="btn btn-primary mb-2">Thêm nhân viên mới</a>
     <table class="table table-bordered" th:if="${nhanVienPage != null and nhanVienPage.content.size() > 0}">
