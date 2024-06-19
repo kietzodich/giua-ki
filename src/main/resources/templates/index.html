@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý nhân viên</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray background for the body */
+        }
+        .container {
+            background-color: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+        h2 {
+            color: #495057;
+        }
+        .btn-primary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .btn-primary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+        .table {
+            background-color: #ffffff;
+        }
+        .table-bordered {
+            border: 1px solid #dee2e6;
+        }
+        .table th, .table td {
+            border: 1px solid #dee2e6;
+        }
+        .table th {
+            background-color: #f2f2f2;
+        }
+        .table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center mt-4">Thông tin nhân viên</h2>
+    <a href="/nhanvien/add" class="btn btn-primary mb-2">Thêm nhân viên mới</a>
+    <table class="table table-bordered" th:if="${nhanVienPage != null and nhanVienPage.content.size() > 0}">
+        <thead>
+        <tr>
+            <th>Mã Nhân Viên</th>
+            <th>Tên Nhân Viên</th>
+            <th>Giới tính</th>
+            <th>Nơi Sinh</th>
+            <th>Tên Phòng</th>
+            <th>Lương</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${nhanVienPage.content}">
+            <td th:text="${employee.maNhanVien}"></td>
+            <td th:text="${employee.tenNhanVien}"></td>
+            <td>
+                <img th:src="@{${employee.phai} == 'NU' ? '/images/woman.jpg' : '/images/man.jpg'}" alt="Gender" width="30">
+            </td>
+            <td th:text="${employee.noiSinh}"></td>
+            <td th:text="${employee.phongBan.tenPhong}"></td>
+            <td th:text="${employee.luong}"></td>
+            <td>
+                <a th:href="@{/nhanvien/capnhat/{id}(id=${employee.maNhanVien})}" class="btn btn-info btn-sm">Sửa</a>
+                <a th:href="@{/nhanvien/xoa/{id}(id=${employee.maNhanVien})}" class="btn btn-danger btn-sm">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${nhanVienPage == null or nhanVienPage.content.size() == 0}">
+        <p>Không có nhân viên để hiển thị.</p>
+    </div>
+    <div>
+        <a th:if="${nhanVienPage != null and nhanVienPage.hasPrevious()}"
+           th:href="@{/nhanvien(page=${nhanVienPage.number - 1})}" class="btn btn-secondary">Previous</a>
+        <span>Page <span th:text="${nhanVienPage != null ? nhanVienPage.number + 1 : '0'}"></span>
+            of <span th:text="${nhanVienPage != null ? nhanVienPage.totalPages : '0'}"></span></span>
+        <a th:if="${nhanVienPage != null and nhanVienPage.hasNext()}"
+           th:href="@{/nhanvien(page=${nhanVienPage.number + 1})}" class="btn btn-secondary">Next</a>
+    </div>
+</div>
+</body>
+</html>
